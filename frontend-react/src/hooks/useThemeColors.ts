@@ -7,64 +7,105 @@ import { useConfig } from '../context/ConfigContext';
 interface ColorScheme {
     background: string;
     surface: string;
-    text: string;
-    border: string;
+    error: string;
+    onPrimary: string;
+    onSecondary: string;
+    onBackground: string;
+    onSurface: string;
+    onError: string;
 }
 
 interface ThemeColorsConfig {
     primary: string;
+    primaryVariant: string;
     secondary: string;
-    accent: string;
-    success: string;
-    warning: string;
-    info: string;
+    secondaryVariant: string;
+    error: string;
     light: ColorScheme;
-    dark: ColorScheme;
+    dark: ColorScheme & Pick<ThemeColorsConfig, 'primary' | 'secondary'>;
 }
 
 interface ThemeTypographyConfig {
     fontFamily: string;
+    fontSizeBase: string;
+    borderRadius: string;
 }
 
 const DEFAULT_COLORS: ThemeColorsConfig = {
-    primary: '#c42222',
-    secondary: '#64748B',
-    accent: '#F59E0B',
-    success: '#10B981',
-    warning: '#EF4444',
-    info: '#06B6D4',
+    primary: '#F07167',
+    primaryVariant: '#C84B42',
+    secondary: '#7BAF9E',
+    secondaryVariant: '#548877',
+    error: '#B00020',
     light: {
-        background: '#FFFFFF',
-        surface: '#F8FAFC',
-        text: '#0F172A',
-        border: '#E2E8F0',
+        background: '#FAF8F5',
+        surface: '#FFFFFF',
+        error: '#B00020',
+        onPrimary: '#000000',
+        onSecondary: '#000000',
+        onBackground: '#3D4852',
+        onSurface: '#3D4852',
+        onError: '#FFFFFF',
     },
     dark: {
-        background: '#0F172A',
-        surface: '#1E293B',
-        text: '#F8FAFC',
-        border: '#334155',
+        primary: '#FF9E95',
+        secondary: '#A8DCD0',
+        background: '#121212',
+        surface: '#1E1E1E',
+        error: '#CF6679',
+        onPrimary: '#000000',
+        onSecondary: '#000000',
+        onBackground: '#FAF8F5',
+        onSurface: '#FAF8F5',
+        onError: '#000000',
     },
 };
+
+function getPalette(colors: ThemeColorsConfig, mode: 'light' | 'dark') {
+    return mode === 'dark'
+        ? colors.dark
+        : { ...colors.light, primary: colors.primary, secondary: colors.secondary };
+}
 
 // Applique les couleurs de la config comme variables CSS sur la racine du document.
 export function useThemeColors() {
     const { getValue, loading } = useConfig();
     const colors = getValue<ThemeColorsConfig>('ui.theme.colors') ?? DEFAULT_COLORS;
     const typography = getValue<ThemeTypographyConfig>('ui.theme.typography');
+    const mode = getValue<'light' | 'dark'>('ui.theme.defaultMode') ?? 'dark';
+    const palette = getPalette(colors, mode);
 
     // Theme MUI basé sur les couleurs et la typographie de la config.
     const MuiTheme = createTheme({
         palette: {
             primary: {
-                main: colors.primary,
+                main: palette.primary,
+                dark: colors.primaryVariant,
+                contrastText: palette.onPrimary,
             },
             secondary: {
-                main: colors.secondary,
-            }
+                main: palette.secondary,
+                dark: colors.secondaryVariant,
+                contrastText: palette.onSecondary,
+            },
+            error: {
+                main: palette.error,
+                contrastText: palette.onError,
+            },
+            background: {
+                default: palette.background,
+                paper: palette.surface,
+            },
+            text: {
+                primary: palette.onBackground,
+                secondary: palette.onSurface,
+            },
         },
         typography: {
             fontFamily: typography?.fontFamily ?? 'Roboto, system-ui, sans-serif',
+        },
+        shape: {
+            borderRadius: Number.parseInt(typography?.borderRadius ?? '8px', 10),
         },
     });
 
@@ -72,26 +113,33 @@ export function useThemeColors() {
     useEffect(() => {
         if (loading) return;
 
+        const activePalette = getPalette(colors, mode);
         const root = document.documentElement.style;
 
         if (typography?.fontFamily) {
             root.setProperty('--font-app', typography.fontFamily);
         }
-        root.setProperty('--color-primary', colors.primary);
-        root.setProperty('--color-secondary', colors.secondary);
-        root.setProperty('--color-accent', colors.accent);
-        root.setProperty('--color-success', colors.success);
-        root.setProperty('--color-warning', colors.warning);
-        root.setProperty('--color-info', colors.info);
+        root.setProperty('--font-size-base', typography?.fontSizeBase ?? '16px');
+        root.setProperty('--border-radius', typography?.borderRadius ?? '8px');
+        root.setProperty('--color-primary', activePalette.primary);
+        root.setProperty('--color-primary-variant', colors.primaryVariant);
+        root.setProperty('--color-secondary', activePalette.secondary);
+        root.setProperty('--color-secondary-variant', colors.secondaryVariant);
+        root.setProperty('--color-error', activePalette.error);
+        root.setProperty('--color-background', activePalette.background);
+        root.setProperty('--color-surface', activePalette.surface);
+        root.setProperty('--color-on-primary', activePalette.onPrimary);
+        root.setProperty('--color-on-secondary', activePalette.onSecondary);
+        root.setProperty('--color-on-background', activePalette.onBackground);
+        root.setProperty('--color-on-surface', activePalette.onSurface);
+        root.setProperty('--color-on-error', activePalette.onError);
         root.setProperty('--color-light-background', colors.light.background);
         root.setProperty('--color-light-surface', colors.light.surface);
-        root.setProperty('--color-light-text', colors.light.text);
-        root.setProperty('--color-light-border', colors.light.border);
+        root.setProperty('--color-light-text', colors.light.onBackground);
         root.setProperty('--color-dark-background', colors.dark.background);
         root.setProperty('--color-dark-surface', colors.dark.surface);
-        root.setProperty('--color-dark-text', colors.dark.text);
-        root.setProperty('--color-dark-border', colors.dark.border);
-    }, [colors, loading, typography]);
+        root.setProperty('--color-dark-text', colors.dark.onBackground);
+    }, [colors, loading, mode, typography]);
 
     return MuiTheme;
 }

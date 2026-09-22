@@ -1,5 +1,5 @@
 import { RouterOutlet } from '@angular/router';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
 import { ConfigService } from '../services/config.service';
@@ -8,19 +8,28 @@ import { ConfigService } from '../services/config.service';
 interface ColorScheme {
   background: string;
   surface: string;
-  text: string;
-  border: string;
+  error: string;
+  onPrimary: string;
+  onSecondary: string;
+  onBackground: string;
+  onSurface: string;
+  onError: string;
 }
 
 interface ThemeColors {
   primary: string;
+  primaryVariant: string;
   secondary: string;
-  accent: string;
-  success: string;
-  warning: string;
-  info: string;
+  secondaryVariant: string;
+  error: string;
   light: ColorScheme;
-  dark: ColorScheme;
+  dark: ColorScheme & Pick<ThemeColors, 'primary' | 'secondary'>;
+}
+
+interface ThemeTypography {
+  fontFamily: string;
+  fontSizeBase: string;
+  borderRadius: string;
 }
 
 @Component({
@@ -29,20 +38,28 @@ interface ThemeColors {
   template: '<router-outlet />',
   styleUrl: './app.css',
   host: {
-    '[style.--color-primary]': 'colors().primary',
-    '[style.--color-secondary]': 'colors().secondary',
-    '[style.--color-accent]': 'colors().accent',
-    '[style.--color-success]': 'colors().success',
-    '[style.--color-warning]': 'colors().warning',
-    '[style.--color-info]': 'colors().info',
+    '[style.color-scheme]': 'mode()',
+    '[style.--font-app]': 'typography().fontFamily',
+    '[style.--font-size-base]': 'typography().fontSizeBase',
+    '[style.--border-radius]': 'typography().borderRadius',
+    '[style.--color-primary]': 'palette().primary',
+    '[style.--color-primary-variant]': 'colors().primaryVariant',
+    '[style.--color-secondary]': 'palette().secondary',
+    '[style.--color-secondary-variant]': 'colors().secondaryVariant',
+    '[style.--color-error]': 'palette().error',
+    '[style.--color-background]': 'palette().background',
+    '[style.--color-surface]': 'palette().surface',
+    '[style.--color-on-primary]': 'palette().onPrimary',
+    '[style.--color-on-secondary]': 'palette().onSecondary',
+    '[style.--color-on-background]': 'palette().onBackground',
+    '[style.--color-on-surface]': 'palette().onSurface',
+    '[style.--color-on-error]': 'palette().onError',
     '[style.--color-light-background]': 'colors().light.background',
     '[style.--color-light-surface]': 'colors().light.surface',
-    '[style.--color-light-text]': 'colors().light.text',
-    '[style.--color-light-border]': 'colors().light.border',
+    '[style.--color-light-text]': 'colors().light.onBackground',
     '[style.--color-dark-background]': 'colors().dark.background',
     '[style.--color-dark-surface]': 'colors().dark.surface',
-    '[style.--color-dark-text]': 'colors().dark.text',
-    '[style.--color-dark-border]': 'colors().dark.border'
+    '[style.--color-dark-text]': 'colors().dark.onBackground'
   }
 })
 export class App {
@@ -52,24 +69,54 @@ export class App {
     filter((colors): colors is ThemeColors => colors !== undefined)
   ), {
     initialValue: {
-      primary: '#c42222',
-      secondary: '#64748B',
-      accent: '#F59E0B',
-      success: '#10B981',
-      warning: '#EF4444',
-      info: '#06B6D4',
+      primary: '#F07167',
+      primaryVariant: '#C84B42',
+      secondary: '#7BAF9E',
+      secondaryVariant: '#548877',
+      error: '#B00020',
       light: {
-        background: '#FFFFFF',
-        surface: '#F8FAFC',
-        text: '#0F172A',
-        border: '#E2E8F0'
+        background: '#FAF8F5',
+        surface: '#FFFFFF',
+        error: '#B00020',
+        onPrimary: '#000000',
+        onSecondary: '#000000',
+        onBackground: '#3D4852',
+        onSurface: '#3D4852',
+        onError: '#FFFFFF'
       },
       dark: {
-        background: '#0F172A',
-        surface: '#1E293B',
-        text: '#F8FAFC',
-        border: '#334155'
+        primary: '#FF9E95',
+        secondary: '#A8DCD0',
+        background: '#121212',
+        surface: '#1E1E1E',
+        error: '#CF6679',
+        onPrimary: '#000000',
+        onSecondary: '#000000',
+        onBackground: '#FAF8F5',
+        onSurface: '#FAF8F5',
+        onError: '#000000'
       }
     }
+  });
+
+  readonly mode = toSignal(this.configService.getValue<'light' | 'dark'>('ui.theme.defaultMode'), {
+    initialValue: 'dark'
+  });
+
+  readonly typography = toSignal(this.configService.getValue<ThemeTypography>('ui.theme.typography').pipe(
+    filter((typography): typography is ThemeTypography => typography !== undefined)
+  ), {
+    initialValue: {
+      fontFamily: 'Roboto, system-ui, sans-serif',
+      fontSizeBase: '16px',
+      borderRadius: '8px'
+    }
+  });
+
+  readonly palette = computed(() => {
+    const colors = this.colors();
+    return this.mode() === 'dark'
+      ? colors.dark
+      : { ...colors.light, primary: colors.primary, secondary: colors.secondary };
   });
 }

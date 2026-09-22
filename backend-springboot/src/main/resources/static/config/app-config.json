@@ -31,21 +31,31 @@
             "allowUserToggle": true,
             "colors": {
                 "primary": "#F07167",
+                "primaryVariant": "#C84B42",
                 "secondary": "#7BAF9E",
-                "accent": "#E1A95F",
-                "terracotta": "#B26B4A",
-                "darkSlate": "#3D4852",
+                "secondaryVariant": "#548877",
+                "error": "#B00020",
                 "light": {
                     "background": "#FAF8F5",
                     "surface": "#FFFFFF",
-                    "text": "#3D4852",
-                    "border": "#E1A95F"
+                    "error": "#B00020",
+                    "onPrimary": "#000000",
+                    "onSecondary": "#000000",
+                    "onBackground": "#3D4852",
+                    "onSurface": "#3D4852",
+                    "onError": "#FFFFFF"
                 },
                 "dark": {
-                    "background": "#1A1A22",
-                    "surface": "#2D353C",
-                    "text": "#FAF8F5",
-                    "border": "#7BAF9E"
+                    "primary": "#FF9E95",
+                    "secondary": "#A8DCD0",
+                    "background": "#121212",
+                    "surface": "#1E1E1E",
+                    "error": "#CF6679",
+                    "onPrimary": "#000000",
+                    "onSecondary": "#000000",
+                    "onBackground": "#FAF8F5",
+                    "onSurface": "#FAF8F5",
+                    "onError": "#000000"
                 }
             },
             "typography": {

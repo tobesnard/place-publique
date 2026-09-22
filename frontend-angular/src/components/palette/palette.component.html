@@ -1,0 +1,6 @@
+<br>
+<div class="grid grid-cols-3 gap-4">
+    <div *ngFor="let color of colors" [ngClass]="color.className" class="p-4 rounded">
+        {{ color.name }}
+    </div>
+</div>

@@ -3,9 +3,9 @@ import { ConfigProvider } from './context/ConfigContext';
 import { useThemeColors } from './hooks/useThemeColors';
 import { Title } from './components/Title';
 import { FrontendSwitcher } from './components/FrontendSwitcher';
-import { Button } from '@mui/material';
+import { Palette } from './components/Palette';
+
 import { ThemeProvider } from '@mui/material/styles';
-import SendIcon from '@mui/icons-material/Send';
 import './App.css';
 
 function AppContent() {
@@ -17,9 +17,8 @@ function AppContent() {
         <Title />
         <FrontendSwitcher />
       </div>
-      <Button variant="contained" endIcon={<SendIcon />}>
-        Contained
-      </Button>
+      <br />
+      <Palette />
     </ThemeProvider>
   );
 }
