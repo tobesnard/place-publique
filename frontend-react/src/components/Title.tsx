@@ -13,16 +13,17 @@ export function Title() {
 
     const apiUrl = getValue<string>('api.baseUrl');
     const appIcon = getValue<string>('resources.icon');
+    const appTagLine = getValue<string>('app.metadata.tagLine');
 
     return (
         // Fragment <>...</> : plusieurs éléments sans <div> superflu dans le DOM.
         <>
             <div className="flex items-center">
                 <img src={apiUrl + '/' + appIcon} alt="App Icon" className="w-[80px]" />
-                {/* Variable CSS injectée par useThemeColors */}
                 <div className="flex flex-col px-2">
-                    <span className="text-4xl font-bold text-[var(--color-dark-text)]">PLACE</span>
-                    <span className="text-4xl font-bold text-[var(--color-dark-text)]">PUBLIQUE</span>
+                    <span className="text-2xl font-bold font-title tracking-widest text-[var(--color-on-background)]">PLACE</span>
+                    <span className="text-2xl font-bold font-title tracking-widest text-[var(--color-on-background)]">PUBLIQUE</span>
+                    <span className="text-sm text-[var(--color-on-primary-variant)]">{appTagLine}</span>
                 </div>
             </div>
         </>

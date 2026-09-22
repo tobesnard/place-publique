@@ -7,6 +7,7 @@
         "environment": "development",
         "metadata": {
             "title": "Place Publique",
+            "tagLine": "S'impliquer. Dialoguer. Agir.",
             "description": "Place Publique est une application dédiée à l'échange entre les citoyens.",
             "author": "Tony Besnard",
             "language": "fr",
@@ -52,6 +53,7 @@
                     "surface": "#1E1E1E",
                     "error": "#CF6679",
                     "onPrimary": "#000000",
+                    "onPrimaryVariant": "#B0B0B0",
                     "onSecondary": "#000000",
                     "onBackground": "#FAF8F5",
                     "onSurface": "#FAF8F5",

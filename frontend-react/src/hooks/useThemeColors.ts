@@ -9,6 +9,7 @@ interface ColorScheme {
     surface: string;
     error: string;
     onPrimary: string;
+    onPrimaryVariant: string;
     onSecondary: string;
     onBackground: string;
     onSurface: string;
@@ -42,6 +43,7 @@ const DEFAULT_COLORS: ThemeColorsConfig = {
         surface: '#FFFFFF',
         error: '#B00020',
         onPrimary: '#000000',
+        onPrimaryVariant: '#B0B0B0',
         onSecondary: '#000000',
         onBackground: '#3D4852',
         onSurface: '#3D4852',
@@ -54,6 +56,7 @@ const DEFAULT_COLORS: ThemeColorsConfig = {
         surface: '#1E1E1E',
         error: '#CF6679',
         onPrimary: '#000000',
+        onPrimaryVariant: '#B0B0B0',
         onSecondary: '#000000',
         onBackground: '#FAF8F5',
         onSurface: '#FAF8F5',
@@ -64,7 +67,7 @@ const DEFAULT_COLORS: ThemeColorsConfig = {
 function getPalette(colors: ThemeColorsConfig, mode: 'light' | 'dark') {
     return mode === 'dark'
         ? colors.dark
-        : { ...colors.light, primary: colors.primary, secondary: colors.secondary };
+        : { ...colors.light, primary: colors.primary, secondary: colors.secondary, onPrimaryVariant: colors.light.onPrimaryVariant };
 }
 
 // Applique les couleurs de la config comme variables CSS sur la racine du document.
@@ -123,8 +126,8 @@ export function useThemeColors() {
         root.setProperty('--border-radius', typography?.borderRadius ?? '8px');
         root.setProperty('--color-primary', activePalette.primary);
         root.setProperty('--color-primary-variant', colors.primaryVariant);
+        root.setProperty('--color-on-primary-variant', activePalette.onPrimaryVariant);
         root.setProperty('--color-secondary', activePalette.secondary);
-        root.setProperty('--color-secondary-variant', colors.secondaryVariant);
         root.setProperty('--color-error', activePalette.error);
         root.setProperty('--color-background', activePalette.background);
         root.setProperty('--color-surface', activePalette.surface);

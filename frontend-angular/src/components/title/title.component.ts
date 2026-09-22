@@ -11,4 +11,5 @@ export class TitleComponent {
     private readonly configService = inject(ConfigService);
     readonly apiUrl = toSignal(this.configService.getValue<string>('api.baseUrl'), { initialValue: '' });
     readonly appIcon = toSignal(this.configService.getValue<string>('resources.icon'), { initialValue: '' });
+    readonly appTagLine = toSignal(this.configService.getValue<string>('app.metadata.tagLine'), { initialValue: '' });
 }

@@ -10,6 +10,7 @@ interface ColorScheme {
   surface: string;
   error: string;
   onPrimary: string;
+  onPrimaryVariant: string;
   onSecondary: string;
   onBackground: string;
   onSurface: string;
@@ -50,6 +51,7 @@ interface ThemeTypography {
     '[style.--color-background]': 'palette().background',
     '[style.--color-surface]': 'palette().surface',
     '[style.--color-on-primary]': 'palette().onPrimary',
+    '[style.--color-on-primary-variant]': 'palette().onPrimaryVariant',
     '[style.--color-on-secondary]': 'palette().onSecondary',
     '[style.--color-on-background]': 'palette().onBackground',
     '[style.--color-on-surface]': 'palette().onSurface',
@@ -79,6 +81,7 @@ export class App {
         surface: '#FFFFFF',
         error: '#B00020',
         onPrimary: '#000000',
+        onPrimaryVariant: '#FF0000',
         onSecondary: '#000000',
         onBackground: '#3D4852',
         onSurface: '#3D4852',
@@ -91,6 +94,7 @@ export class App {
         surface: '#1E1E1E',
         error: '#CF6679',
         onPrimary: '#000000',
+        onPrimaryVariant: '#FF0000',
         onSecondary: '#000000',
         onBackground: '#FAF8F5',
         onSurface: '#FAF8F5',
