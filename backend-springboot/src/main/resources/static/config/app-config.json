@@ -1,0 +1,91 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "app": {
+        "name": "Place Publique",
+        "slug": "place-publique",
+        "version": "0.2.0",
+        "environment": "development",
+        "metadata": {
+            "title": "Place Publique",
+            "description": "Place Publique est une application dédiée à l'échange entre les citoyens.",
+            "author": "Tony Besnard",
+            "language": "fr",
+            "charset": "UTF-8",
+            "keywords": [
+                "web",
+                "application",
+                "dashboard"
+            ],
+            "favicon": "/assets/icons/favicon.ico",
+            "openGraph": {
+                "ogTitle": "Place Publique",
+                "ogDescription": "Place Publique est une application dédiée à l'échange entre les citoyens.",
+                "ogImage": "/assets/images/og-cover.png",
+                "ogType": "website"
+            }
+        }
+    },
+    "ui": {
+        "theme": {
+            "defaultMode": "dark",
+            "allowUserToggle": true,
+            "colors": {
+                "primary": "#FF4F00",
+                "secondary": "#00E5FF",
+                "accent": "#F59E0B",
+                "success": "#10B981",
+                "warning": "#EF4444",
+                "info": "#06B6D4",
+                "light": {
+                    "background": "#FFFFFF",
+                    "surface": "#F8FAFC",
+                    "text": "#0F172A",
+                    "border": "#E2E8F0"
+                },
+                "dark": {
+                    "background": "#1A1A22",
+                    "surface": "#292932",
+                    "text": "#FFFFFF",
+                    "border": "#334155"
+                }
+            },
+            "typography": {
+                "fontFamily": "Inter, system-ui, sans-serif",
+                "fontSizeBase": "16px",
+                "borderRadius": "8px"
+            }
+        },
+        "layout": {
+            "header": {
+                "fixed": true,
+                "showLogo": true,
+                "showSearch": true
+            },
+            "sidebar": {
+                "enabled": true,
+                "defaultCollapsed": false,
+                "position": "left"
+            },
+            "footer": {
+                "enabled": true,
+                "copyright": "© 2026 Place Publique. Tous droits réservés."
+            }
+        }
+    },
+    "features": {
+        "darkMode": true,
+        "notifications": true,
+        "analytics": false
+    },
+    "api": {
+        "baseUrl": "https://api.place-publique.com/v1",
+        "timeoutMs": 5000
+    },
+    "resources": {
+        "icon": "img/icon.png"
+    },
+    "frontends": {
+        "react": "http://localhost:5173",
+        "angular": "http://localhost:4200"
+    }
+}
