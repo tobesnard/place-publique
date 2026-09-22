@@ -42,6 +42,10 @@ body {
 app-root {
   --mat-sys-primary: var(--color-primary);
   --mat-sys-on-primary: #ffffff;
+  --mat-sys-secondary: var(--color-secondary);
+  --mat-sys-on-secondary: #ffffff;
+  --mat-sys-tertiary: var(--color-accent);
+  --mat-sys-on-tertiary: #ffffff;
   --mat-button-filled-container-color: var(--color-primary);
-  --mat-button-filled-label-text-color: #ffffff;
+  // --mat-button-filled-label-text-color: #ffffff;
 }

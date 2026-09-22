@@ -1,6 +1,7 @@
 // hooks/useThemeColors.ts
 // Custom hook : combine useEffect + useConfig, ne retourne pas de JSX.
 import { useEffect } from 'react';
+import { createTheme } from '@mui/material/styles';
 import { useConfig } from '../context/ConfigContext';
 
 interface ColorScheme {
@@ -49,13 +50,28 @@ const DEFAULT_COLORS: ThemeColorsConfig = {
 // Applique les couleurs de la config comme variables CSS sur la racine du document.
 export function useThemeColors() {
     const { getValue, loading } = useConfig();
+    const colors = getValue<ThemeColorsConfig>('ui.theme.colors') ?? DEFAULT_COLORS;
+    const typography = getValue<ThemeTypographyConfig>('ui.theme.typography');
+
+    // Theme MUI basé sur les couleurs et la typographie de la config.
+    const MuiTheme = createTheme({
+        palette: {
+            primary: {
+                main: colors.primary,
+            },
+            secondary: {
+                main: colors.secondary,
+            }
+        },
+        typography: {
+            fontFamily: typography?.fontFamily ?? 'Roboto, system-ui, sans-serif',
+        },
+    });
 
     // Manipulation directe du DOM = effet de bord, donc dans un useEffect.
     useEffect(() => {
         if (loading) return;
 
-        const colors = getValue<ThemeColorsConfig>('ui.theme.colors') ?? DEFAULT_COLORS;
-        const typography = getValue<ThemeTypographyConfig>('ui.theme.typography');
         const root = document.documentElement.style;
 
         if (typography?.fontFamily) {
@@ -75,5 +91,7 @@ export function useThemeColors() {
         root.setProperty('--color-dark-surface', colors.dark.surface);
         root.setProperty('--color-dark-text', colors.dark.text);
         root.setProperty('--color-dark-border', colors.dark.border);
-    }, [getValue, loading]);
+    }, [colors, loading, typography]);
+
+    return MuiTheme;
 }
