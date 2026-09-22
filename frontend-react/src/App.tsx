@@ -11,7 +11,7 @@ function AppContent() {
   useThemeColors();
   return (
     <>
-      <div className="flex items-center justify-evenly">
+      <div className="flex items-center justify-between">
         <Title />
         <FrontendSwitcher />
       </div>

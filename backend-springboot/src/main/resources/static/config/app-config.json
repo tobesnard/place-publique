@@ -30,27 +30,26 @@
             "defaultMode": "dark",
             "allowUserToggle": true,
             "colors": {
-                "primary": "#FF4F00",
-                "secondary": "#00E5FF",
-                "accent": "#F59E0B",
-                "success": "#10B981",
-                "warning": "#EF4444",
-                "info": "#06B6D4",
+                "primary": "#F07167",
+                "secondary": "#7BAF9E",
+                "accent": "#E1A95F",
+                "terracotta": "#B26B4A",
+                "darkSlate": "#3D4852",
                 "light": {
-                    "background": "#FFFFFF",
-                    "surface": "#F8FAFC",
-                    "text": "#0F172A",
-                    "border": "#E2E8F0"
+                    "background": "#FAF8F5",
+                    "surface": "#FFFFFF",
+                    "text": "#3D4852",
+                    "border": "#E1A95F"
                 },
                 "dark": {
                     "background": "#1A1A22",
-                    "surface": "#292932",
-                    "text": "#FFFFFF",
-                    "border": "#334155"
+                    "surface": "#2D353C",
+                    "text": "#FAF8F5",
+                    "border": "#7BAF9E"
                 }
             },
             "typography": {
-                "fontFamily": "Inter, system-ui, sans-serif",
+                "fontFamily": "Montserrat, Open Sans, system-ui, sans-serif",
                 "fontSizeBase": "16px",
                 "borderRadius": "8px"
             }

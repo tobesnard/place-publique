@@ -18,10 +18,12 @@ export function Title() {
         // Fragment <>...</> : plusieurs éléments sans <div> superflu dans le DOM.
         <>
             <div className="flex items-center">
-                <img src={apiUrl + '/' + appIcon} alt="App Icon" className="w-[100px]" />
+                <img src={apiUrl + '/' + appIcon} alt="App Icon" className="w-[80px]" />
                 {/* Variable CSS injectée par useThemeColors */}
-                <span className="text-5xl font-bold text-[var(--color-dark-text)]">PLACE</span>
-                <span className="text-5xl font-bold text-[var(--color-primary)]">PUBLIQUE</span>
+                <div className="flex flex-col px-2">
+                    <span className="text-4xl font-bold text-[var(--color-dark-text)]">PLACE</span>
+                    <span className="text-4xl font-bold text-[var(--color-dark-text)]">PUBLIQUE</span>
+                </div>
             </div>
         </>
     )

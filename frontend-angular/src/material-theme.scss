@@ -6,27 +6,15 @@
 @use '@angular/material' as mat;
 @use 'sass:map';
 
-:root {
-  --color-primary: #19e152;
-  --color-secondary: #00acc1;
-}
 
-$my-orange: map.merge(mat.$orange-palette, (500: var(--color-primary),
-      600: var(--color-primary),
-      700: var(--color-primary),
-      800: var(--color-primary),
-    ));
 
-$my-cyan: map.merge(mat.$cyan-palette, (500: var(--color-secondary),
-      600: var(--color-secondary),
-      700: var(--color-secondary),
-      800: var(--color-secondary),
-    ));
+
 
 html {
   height: 100%;
-  @include mat.theme((color: (primary: $my-orange,
-        tertiary: $my-cyan,
+
+  @include mat.theme((color: (primary: mat.$orange-palette,
+        tertiary: mat.$cyan-palette,
       ),
       typography: Roboto,
       density: 0,
@@ -51,8 +39,9 @@ body {
   height: 100%;
 }
 
-:root {
-  @include mat.fab-overrides((container-color : orange,
-      container-elevation-shadow : - 4px - 4px 5px 0px rgba(0, 0, 0, 0.5),
-    ));
+app-root {
+  --mat-sys-primary: var(--color-primary);
+  --mat-sys-on-primary: #ffffff;
+  --mat-button-filled-container-color: var(--color-primary);
+  --mat-button-filled-label-text-color: #ffffff;
 }
